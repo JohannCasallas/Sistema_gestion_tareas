@@ -60,6 +60,39 @@ namespace Sistema_gestion_tareas.Server.Controllers
             };
         }
 
+        // POST: api/Usuarios
+        [HttpPost("UsuarioAutenticacion")]
+        public async Task<ActionResult<Respuesta>> UsuarioAutenticacion(Usuario usuario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var usuarioEncontrado = await _context.Usuarios.FirstOrDefaultAsync(u => 
+            u.CorreoElectronico == usuario.CorreoElectronico && u.Contraseña == usuario.Contraseña);
+
+            if (usuarioEncontrado != null)
+            {
+                return new Respuesta
+                {
+                    Exito = true,
+                    Mensaje = "Usuario autenticado correctamente",
+                    Datos = usuarioEncontrado
+                };
+            }
+            else
+            {
+                return new Respuesta
+                {
+                    Exito = false,
+                    Mensaje = "Correo electrónico o contraseña incorrectos",
+                    Datos = null
+                };
+            }
+        }
+
+
         // PUT: api/Usuarios/5
         [HttpPut("ActualizarUsuario/{id}")]
         public async Task<IActionResult> ActualizarUsuario(int id, Usuario usuario)
