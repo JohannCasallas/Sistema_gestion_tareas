@@ -3,7 +3,7 @@ export interface IUsuario {
     nombreUsuario: string;
     apellidoUsuario: string;
     correoElectronico: string; 
-    contraseña: string;
+    contrasena: string;
 }
 
 export const IUsuarioInicial: IUsuario = {
@@ -11,5 +11,5 @@ export const IUsuarioInicial: IUsuario = {
     nombreUsuario: '',
     apellidoUsuario: '',
     correoElectronico: '',
-    contraseña:'', 
+    contrasena:'', 
 }

@@ -21,9 +21,27 @@ namespace Sistema_gestion_tareas.Server.Controllers
 
         // GET: api/Usuarios
         [HttpGet("ObtenerUsuarios")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> ObtenerUsuarios()
+        public async Task<ActionResult<Respuesta>> ObtenerUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            try
+            {
+                var usuarios = await _context.Usuarios.ToListAsync();
+                return new Respuesta
+                {
+                    Exito = true,
+                    Mensaje = "Usuarios obtenidos correctamente",
+                    Datos = usuarios
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta
+                {
+                    Exito = false,
+                    Mensaje = "Error al obtener usuarios: " + ex.Message,
+                    Datos = null
+                };
+            }
         }
 
         // GET: api/Usuarios/5
@@ -70,7 +88,7 @@ namespace Sistema_gestion_tareas.Server.Controllers
             }
 
             var usuarioEncontrado = await _context.Usuarios.FirstOrDefaultAsync(u => 
-            u.CorreoElectronico == usuario.CorreoElectronico && u.Contraseña == usuario.Contraseña);
+            u.CorreoElectronico == usuario.CorreoElectronico && u.Contrasena == usuario.Contrasena);
 
             if (usuarioEncontrado != null)
             {

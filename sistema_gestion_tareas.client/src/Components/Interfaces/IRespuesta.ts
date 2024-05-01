@@ -8,5 +8,5 @@ export interface IRespuesta {
 export const IRespuestaInicial: IRespuesta = {
     exito: false,
     mensaje: '',
-    datos: [
+    datos: []
 }

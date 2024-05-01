@@ -17,7 +17,7 @@ namespace Sistema_gestion_tareas.Server.Models
         public string? NombreUsuario { get; set; }
         public string? ApellidoUsuario { get; set; }
         public string? CorreoElectronico { get; set; }
-        public string? Contraseña { get; set; }
+        public string? Contrasena { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public DateTime? FechaConexion { get; set; }
 

@@ -54,7 +54,7 @@ namespace Sistema_gestion_tareas.Server.Data
 
                 entity.Property(e => e.ApellidoUsuario).HasMaxLength(50);
 
-                entity.Property(e => e.Contraseña).HasMaxLength(50);
+                entity.Property(e => e.Contrasena).HasMaxLength(50);
 
                 entity.Property(e => e.CorreoElectronico)
                     .HasMaxLength(70)
