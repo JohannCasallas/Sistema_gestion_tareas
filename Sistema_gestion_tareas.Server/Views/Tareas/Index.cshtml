@@ -1,0 +1,60 @@
+﻿@using Sistema_gestion_tareas.Server.Models
+@model IEnumerable<Tarea>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreTarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionTarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NivelTarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoTarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreTarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionTarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NivelTarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoTarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.IdUsuario)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdTarea">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdTarea">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdTarea">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
