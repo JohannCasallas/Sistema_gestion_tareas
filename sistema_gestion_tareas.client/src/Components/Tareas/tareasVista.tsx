@@ -23,10 +23,10 @@ import { IUsuario } from '../../Interfaces/IUsuario';
 
 interface TareasVistaProps {
     alCambiarValorAutocomplete: (_event: React.SyntheticEvent, newValue: string | null) => void;
-    obtenerTareasPorUsuario: () => Promise<void>;
+    obtenerTareasPorUsuario: () => Promise<void>;				
     isLoading: boolean;
     usuarios: IUsuario[];
-    tareas: ITarea[];
+    tareas: ITarea[] | undefined;				
 }
 
 const TareasVista: React.FC<TareasVistaProps> = ({ 
@@ -64,7 +64,7 @@ const TareasVista: React.FC<TareasVistaProps> = ({
                         Buscar
                     </Button>
                 </Grid>
-                {tareas.length > 0 && (
+                {tareas && tareas.length > 0 && (
                     <Grid item xs={12} >
                         <TableContainer component={Paper}>
                             <Table >
@@ -78,7 +78,7 @@ const TareasVista: React.FC<TareasVistaProps> = ({
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {tareas.map((tarea) => (
+                                    {tareas && tareas.map((tarea) => (
                                         <TableRow key={tarea.nombreTarea}>
                                             <TableCell>{tarea.nombreTarea}</TableCell>
                                             <TableCell>{tarea.descripcionTarea}</TableCell>

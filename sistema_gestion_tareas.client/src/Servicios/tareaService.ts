@@ -27,14 +27,12 @@ export class TareaService {
         }
     }
 
-    async obtenerTareasPorUsuario(idUsuario: number): Promise<ITarea[]> {
-    try {
-        const response: AxiosResponse<ITarea[]> = await axios.get<ITarea[]>(`${this.baseUrl}/api/Tareas/ObtenerTareasPorUsuario/${idUsuario}`);
+    async obtenerTareasPorUsuario(idUsuario: number): Promise<IRespuesta<ITarea[]>> {
+        const response: AxiosResponse<IRespuesta<ITarea[]>> = await axios.get<IRespuesta<ITarea[]>>(
+            `${this.baseUrl}/api/Tareas/ObtenerTareasPorUsuario/${idUsuario}`);
         return response.data;
-    } catch (error) {
-        throw new Error("Error al obtener las tareas del usuario");
     }
-    }
+
 
     //async crearTarea(tarea: ITarea): Promise<IRespuesta> {
     //    try {
@@ -53,12 +51,12 @@ export class TareaService {
         }
     }
 
-    async eliminarTarea(id: number): Promise<IRespuesta> {
-        try {
-            const response: AxiosResponse<IRespuesta> = await axios.delete<IRespuesta>(`${this.baseUrl}/api/Tareas/EliminarTarea/${id}`);
-            return response.data;
-        } catch (error) {
-            throw new Error("Error al eliminar la tarea");
-        }
-    }
+    //async eliminarTarea(id: number): Promise<IRespuesta> {
+    //    try {
+    //        const response: AxiosResponse<IRespuesta<>> = await axios.delete<IRespuesta>(`${this.baseUrl}/api/Tareas/EliminarTarea/${id}`);
+    //        return response.data;
+    //    } catch (error) {
+    //        throw new Error("Error al eliminar la tarea");
+    //    }
+    //}
 }
