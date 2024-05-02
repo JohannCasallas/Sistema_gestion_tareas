@@ -24,14 +24,15 @@ namespace Sistema_gestion_tareas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tarea>>> ObtenerTareas()
         {
-            return await _context.Tareas.Include(t => t. IdUsuarioNavigation).ToListAsync();
+            return await _context.Tareas.ToListAsync();
         }
+
 
         // GET: api/Tareas/5
         [HttpGet("ObtenerTarea/{id}")]
         public async Task<ActionResult<Tarea>> ObtenerTarea(int id)
         {
-            var tarea = await _context.Tareas.Include(t => t.IdUsuarioNavigation).FirstOrDefaultAsync(m => m.IdTarea == id);
+            var tarea = await _context.Tareas.FirstOrDefaultAsync(m => m.IdTarea == id);
 
             if (tarea == null)
             {
@@ -46,7 +47,6 @@ namespace Sistema_gestion_tareas.Server.Controllers
         public async Task<ActionResult<IEnumerable<Tarea>>> ObtenerTareasPorUsuario(int idUsuario)
         {
             var tareas = await _context.Tareas
-            .Include(t => t.IdUsuarioNavigation)
             .Where(t => t.IdUsuario == idUsuario)
             .ToListAsync();
 
