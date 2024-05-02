@@ -21,26 +21,16 @@ namespace Sistema_gestion_tareas.Server.Controllers
 
         // GET: api/Usuarios
         [HttpGet("ObtenerUsuarios")]
-        public async Task<ActionResult<Respuesta>> ObtenerUsuarios()
+        public async Task<ActionResult<IEnumerable<Usuario>>> ObtenerUsuarios()
         {
             try
             {
                 var usuarios = await _context.Usuarios.ToListAsync();
-                return new Respuesta
-                {
-                    Exito = true,
-                    Mensaje = "Usuarios obtenidos correctamente",
-                    Datos = usuarios
-                };
+                return Ok(usuarios);
             }
             catch (Exception ex)
             {
-                return new Respuesta
-                {
-                    Exito = false,
-                    Mensaje = "Error al obtener usuarios: " + ex.Message,
-                    Datos = null
-                };
+                return StatusCode(500, $"Error al obtener usuarios: {ex.Message}");
             }
         }
 

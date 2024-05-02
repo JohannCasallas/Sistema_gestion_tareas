@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Sistema_gestion_tareas.Server.Data;
+using System.Text.Json.Serialization;
 
 // Crea un nuevo constructor de aplicación web
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Agrega generación de documentación Swagger
 builder.Services.AddSwaggerGen();
+
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//    });
+
 
 // Construye la aplicación
 var app = builder.Build();

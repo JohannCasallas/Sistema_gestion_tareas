@@ -24,7 +24,7 @@ namespace Sistema_gestion_tareas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tarea>>> ObtenerTareas()
         {
-            return await _context.Tareas.Include(t => t.IdUsuarioNavigation).ToListAsync();
+            return await _context.Tareas.Include(t => t. IdUsuarioNavigation).ToListAsync();
         }
 
         // GET: api/Tareas/5
@@ -39,6 +39,23 @@ namespace Sistema_gestion_tareas.Server.Controllers
             }
 
             return tarea;
+        }
+
+        // GET: api/Tareas/Usuario/{idUsuario}
+        [HttpGet("ObtenerTareasPorUsuario/{idUsuario}")]
+        public async Task<ActionResult<IEnumerable<Tarea>>> ObtenerTareasPorUsuario(int idUsuario)
+        {
+            var tareas = await _context.Tareas
+            .Include(t => t.IdUsuarioNavigation)
+            .Where(t => t.IdUsuario == idUsuario)
+            .ToListAsync();
+
+            if (tareas == null || tareas.Count == 0)
+            {
+                return NotFound("No se encontraron tareas para el usuario especificado");
+            }
+
+            return Ok(tareas);
         }
 
         // POST: api/Tareas

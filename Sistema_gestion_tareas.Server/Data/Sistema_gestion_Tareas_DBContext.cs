@@ -24,7 +24,7 @@ namespace Sistema_gestion_tareas.Server.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("DefaultConexion");
+                optionsBuilder.UseSqlServer("DefaultConnection");
             }
         }
 
@@ -69,6 +69,9 @@ namespace Sistema_gestion_tareas.Server.Data
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.NombreUsuario).HasMaxLength(50);
+
+                // Ignorar la configuración de carga automática de Tareas
+                entity.Navigation(e => e.Tareas).AutoInclude(false);
             });
 
             OnModelCreatingPartial(modelBuilder);
