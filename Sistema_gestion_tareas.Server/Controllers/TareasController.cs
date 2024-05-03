@@ -47,15 +47,27 @@ namespace Sistema_gestion_tareas.Server.Controllers
         public async Task<ActionResult<IEnumerable<Tarea>>> ObtenerTareasPorUsuario(int idUsuario)
         {
             var tareas = await _context.Tareas
-            .Where(t => t.IdUsuario == idUsuario)
-            .ToListAsync();
+                .Where(t => t.IdUsuario == idUsuario)
+                .ToListAsync();
 
             if (tareas == null || tareas.Count == 0)
             {
-                return NotFound("No se encontraron tareas para el usuario especificado");
+                return Ok(new Respuesta
+                {
+                    Exito = false,
+                    Mensaje = "No se encontraron tareas para el usuario especificado",
+                    Datos = null
+                });
             }
-
-            return Ok(tareas);
+            else
+            {
+                return Ok(new Respuesta
+                {
+                    Exito = true,
+                    Mensaje = "Tareas encontradas",
+                    Datos = tareas
+                });
+            }
         }
 
         // POST: api/Tareas
