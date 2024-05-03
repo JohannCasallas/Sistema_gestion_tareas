@@ -5,6 +5,7 @@ import {
     Backdrop, Button,
     CircularProgress,
     Grid,
+    IconButton,
     Paper,
     Table,
     TableBody,
@@ -17,13 +18,17 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import AddIcon from '@mui/icons-material/Add';
 import { ITarea } from '../../Interfaces/ITarea';
 import { IUsuario } from '../../Interfaces/IUsuario';
 
 
 interface TareasVistaProps {
     alCambiarValorAutocomplete: (_event: React.SyntheticEvent, newValue: string | null) => void;
-    obtenerTareasPorUsuario: () => Promise<void>;				
+    obtenerTareasPorUsuario: () => Promise<void>;	
+    manejarModal: (accion: 'creacion' | 'edicion') => void;
+    manejarClicEdicion: (tarea: ITarea) => void;
     isLoading: boolean;
     usuarios: IUsuario[];
     tareas: ITarea[] | undefined;				
@@ -32,6 +37,8 @@ interface TareasVistaProps {
 const TareasVista: React.FC<TareasVistaProps> = ({ 
     alCambiarValorAutocomplete,
     obtenerTareasPorUsuario,
+    manejarClicEdicion,
+    manejarModal,
     isLoading,
     usuarios,
     tareas
@@ -64,11 +71,26 @@ const TareasVista: React.FC<TareasVistaProps> = ({
                         Buscar
                     </Button>
                 </Grid>
-                {tareas && tareas.length > 0 && (
+                {/*{tareas && tareas.length > 0 && (*/}
                     <Grid item xs={12} >
                         <TableContainer component={Paper}>
                             <Table >
                                 <TableHead>
+                                    <TableRow>
+                                        <TableCell colSpan={5} style={{ textAlign: 'right' }}>
+                                            <IconButton onClick={() => { }}>
+                                                <RefreshIcon />
+                                            </IconButton>
+                                        <Button
+                                            size="small"
+                                            variant="contained"
+                                            startIcon={<AddIcon />}
+                                            onClick={() => manejarModal('creacion') }
+                                        >
+                                                Agregar
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
                                     <TableRow>
                                         <TableCell>Tarea</TableCell>
                                         <TableCell>Descripcion</TableCell>
@@ -85,12 +107,21 @@ const TareasVista: React.FC<TareasVistaProps> = ({
                                             <TableCell>{tarea.nivelTarea}</TableCell>
                                             <TableCell>{tarea.estadoTarea ? 'Finalizada' : 'Abierta'}</TableCell>
                                             <TableCell>
-                                                <Button size="small" variant="contained" startIcon={<DeleteIcon />}>
-                                                    Eliminar
-                                                </Button>
-                                                <Button size="small" variant="contained" startIcon={<EditIcon />}>
-                                                    Editar
-                                                </Button>
+                                                <IconButton
+                                                    size="small"
+                                                    onClick={() => {}}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                                <IconButton
+                                                    size="small"
+                                                    onClick={() => {
+                                                        manejarModal('edicion');
+                                                        manejarClicEdicion(tarea);
+                                                    }}
+                                                >
+                                                    <EditIcon />
+                                                </IconButton>
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -98,7 +129,7 @@ const TareasVista: React.FC<TareasVistaProps> = ({
                             </Table>
                         </TableContainer>
                     </Grid>
-                )}
+               {/* )}*/}
             </Grid>
         </>
     );

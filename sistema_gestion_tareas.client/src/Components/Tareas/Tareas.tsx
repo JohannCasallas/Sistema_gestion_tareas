@@ -1,11 +1,12 @@
 import React from 'react';
-import { ITarea } from '../../Interfaces/ITarea';
+import { ITarea, ITareaInicial } from '../../Interfaces/ITarea';
 import { IUsuario, IUsuarioInicial } from '../../Interfaces/IUsuario';
 import { TareaService } from '../../Servicios/tareaService';
 import { UsuarioService } from '../../Servicios/usuarioService';
 import TareasVista from './tareasVista';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TareasModal from './tareasModal';
 
 
 const Tareas = () => {
@@ -14,7 +15,10 @@ const Tareas = () => {
     const [usuarios, setUsuarios] = React.useState<IUsuario[]>([]);
     const [usuario, setUsuario] = React.useState<IUsuario>(IUsuarioInicial);
     const [tareas, setTareas] = React.useState<ITarea[]>();
+    const [tarea, setTarea] = React.useState<ITarea>(ITareaInicial);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [estadoModal, setEstadoModal] = React.useState<boolean>(false);
+    const [open, setOpen] = React.useState(false);
 
 
     React.useEffect(() => {
@@ -35,6 +39,7 @@ const Tareas = () => {
             setTareas(response.datos);
             toast.success(response.mensaje!);
         } else {
+            setTareas(response.datos);
             toast.error(response.mensaje!);
         }
         setIsLoading(false);
@@ -48,15 +53,52 @@ const Tareas = () => {
         }
     };
 
+    const alCambiarValor: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+        const { name, value } = e.target;
+        setTarea(prevCategoria => ({
+            ...prevCategoria,
+            [name]: value
+        }));
+    };
+
+    const manejarModal = (accion: 'creacion' | 'edicion') => {
+        setOpen(true);
+        if (accion === 'creacion') {
+            setEstadoModal(true);
+        } else {
+            setEstadoModal(false);
+        }
+    };
+
+    const cerrarModal = () => {
+        setOpen(false);
+        setTarea(ITareaInicial);
+    };
+
+    const manejarClicEdicion = (tarea: ITarea) => {
+        setTarea(tarea);
+        manejarModal('edicion');
+    };
+
+
     return (
         <>
             <ToastContainer /> 
             <TareasVista
                 alCambiarValorAutocomplete={alCambiarValorAutocomplete}
                 obtenerTareasPorUsuario={obtenerTareasPorUsuario}
+                manejarClicEdicion={manejarClicEdicion}
+                manejarModal={manejarModal}
                 isLoading={isLoading}
                 usuarios={usuarios}
                 tareas={tareas}
+            />
+            <TareasModal
+                alCambiarValor={alCambiarValor}
+                cerrarModal={cerrarModal}
+                estadoModal={estadoModal}
+                tarea={tarea}
+                open={open}
             />
         </>
     );
